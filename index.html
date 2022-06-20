@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=4c942506cf8d5329a9cbc66b1eff75ad86a49e34">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup theme-color -->
+<!-- start theme color meta headers -->
+<meta name="theme-color" content="#151515">
+<meta name="msapplication-navbutton-color" content="#151515">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- end theme color meta headers -->
+
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>风语者：键盘的输入内容窃听和安全防护</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="一. 摘要" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="信息安全作品赛" />
+<meta property="og:description" content="信息安全作品赛" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="风语者：键盘的输入内容窃听和安全防护" />
+<meta name="twitter:card" content="summary" />
+<!-- <meta property="twitter:title" content="一. 摘要" /> -->
+<script type="application/ld+json">
+{"url":"http://localhost:4000/","headline":"一. 摘要","description":"信息安全作品赛","name":"风语者：键盘的输入内容窃听和安全防护","@type":"WebSite","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+    <div class="line" style="width: 1519.2px;"></div>
+    <header>
+      <div class="container">
+        <div class="image" style="margin-top:-20px ;position: relative;">
+          <img src="\images\keyboard.png" style="zoom:35%;" />
+          <h2 class="title" style="position:absolute;left: 175px;top: 200px;font-size: 70px;color: rgb(10, 10, 10);">
+            Keyboard Security
+          </h2>
+        </div>
+        <div class="line_1" style="width: 1529px;height: 10px;margin-left: -270px;margin-top: -7px; background-color: black;"></div>
+        <div style="text-align:center ; padding-top: 15px;">
+          <a id="a-title" href="/">
+            <h1>&nbsp;风语者：键盘的输入内容窃听和安全防护</h1>
+          </a>
+          <p>郑杨涛 王浩旭 王剀艺</p>
+          <h2>信息安全作品赛</h2>
+          
+        </div>
+        
+
+        <!-- <section id="downloads">
+          
+            <a href="https://github.com/pages-themes/hacker/zipball/gh-pages" class="btn">Download as .zip</a>
+            <a href="https://github.com/pages-themes/hacker/tarball/gh-pages" class="btn">Download as .tar.gz</a>
+          
+          <a href="https://github.com/pages-themes/hacker" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section> -->
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2 id="一-摘要" style="font-size: 30px;">一. 摘要</h2>
+
+<p>键盘是计算机系统主要的信息输入设备，从个人使用的电脑、手机，到国家安全部门的打印机、POS机等设备，都离不开键盘来实现人与这些电子设备进行信息的交互，因此键盘在所有电子设备中地位十分重要。2020年，全球机械键盘市场规模达到了73亿元，预计2026年将达到170亿元，年复合增长率(CAGR)为12.8%，可见键盘的使用会变得越来越广泛。在信息安全领域有一种针对电子设备电磁辐射的攻击手段——<code class="language-plaintext highlighter-rouge">TEMPEST</code>（Transient Electromagnetic Pulse Emanation Surveillance Technology）攻击，是对电磁泄漏信号中所携带的敏感信息进行分析、测试、接收、还原的一系列技术，从TEMPEST泄漏中获取情报已成为美国非入侵式电子情报获取(Non—trespassatory ELINT)的重要手段之一。</p>
+<p>考虑到键盘作为一种十分重要的电子信息设备，我们试图挖掘其在工作过程中存在的<code class="language-plaintext highlighter-rouge">电磁泄漏的漏洞</code>，尝试证实TEMPSET攻击对键盘的安全性也会造成很大威胁，并提出相应的防御策略。通过分析键盘的工作机理，我们发现键盘中的电子元件在运作时会将具有特征的电磁波发射出来，如果运用TEMPEST攻击技术手段对其进行捕获和分析，很有可能会造成按键信息的泄露，因此存在较高的安全风险。本作品针对这一问题，进一步探究并实现了<code class="language-plaintext highlighter-rouge">通过键盘泄露的电磁噪声还原按键信息</code>的过程，利用简单设备完成电磁辐射的采集，运用低通滤波和有效波形的分割完成信号特征的提取，最后使用机器学习、卷积神经网络和孪生神经网络的方法分别实现了效果更佳的TEMPEST攻击手段。</p>
+<p>对于针对键盘的TEMPEST攻击，一般采取的防御措施有<code class="language-plaintext highlighter-rouge">抑源法、屏蔽法、滤波法和噪声干扰</code>等方法，通过综合考虑键盘电磁泄漏的特点，我们设计出相应的防御措施：在键盘电磁泄漏的传播过程中形成很大的<code class="language-plaintext highlighter-rouge">无规律噪声干扰</code>，从而使得电磁辐射的分析难度增大，这是对传统键盘进行创新性改良。另外通过进行传统键盘和改良键盘面对电磁泄漏攻击的对比实验，可以看出，改良键盘能够抵御多种电磁泄漏攻击，具有良好的安全性和实用性。</p>
+
+<h2 id="二-attack" style="font-size: 30px;">二. 键盘的电磁泄漏攻击</h2>
+<p style="text-align:center">
+<video src=".\images\output_x264.mp4" width="700px" controls></video>
+</p>
+
+<h3 style="font-size: 25px;">(一) 攻击场景说明</h3>
+<p>选取一个电磁噪声较小的环境进行测试，测试设备为个人笔记本电脑，测量电磁信号的硬件设备为Arduino Nano开发板，传输数据设备为ESP8266开发板。设备示意图1所示。由于电磁信号的传播可视作是运动的电磁场，当电磁能量在传播过程中接触到导体就会激发出电压，这种现象称之为辐射耦合，那么就可以通过天线和泄露传播的电磁信号进行辐射耦合产生电压信号，再通过开发板中收集电压信号进而感知电磁信号的变化。</p>
+<p style="text-align:center"><img src="/images/device.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 1 攻击设备示意图</p>
+<!-- <p style="text-align:center"><img src="/images/device1.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 2 攻击设备实景图</p> -->
+
+
+
+<h3 id="一-原理" style="font-size: 25px;">(二) 攻击流程说明</h3>
+
+<p>测试流程：我们使用nano开发板上的ADC引脚测量电压信号，并在引脚上连接一根杜邦线作为简易天线。这样的简易设备收集到的信号是较为微弱的，故实际操作时我们需要将设备连接到被攻击电脑上，这样可以收到较强的泄露信号。由于连接到被攻击电脑上时无法通过串口向外发送数据，我们需要再添加一个ESP8266开发板，利用其Wi-Fi模块将将得到的数据发送到攻击机上，实现对目标机器键盘泄露信号的窃取。攻击流程如图3所示。</p>
+
+<p style="text-align:center"><img src="/images/process1.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 2 按键识别流程</p>
+
+<p><strong>第一部分是信号采集</strong>，此部分首先需要详细了解键盘产生电磁泄露的原因，下文将从键盘结构、电路结构以及工作原理等方面进行分析来还原键盘产生电磁泄漏的过程，以及电磁泄露的方式途径，目的是据此设计出合适的采集信号的方案。</p>
+<p><strong>第二部分是信号处理</strong>，本作品旨在使用简单设备在电磁环境要求不高的环场景下完成TEMPEST攻击，因此获取到的原式信号往往不够纯净，需要首先进行滤波降噪操作，以得到较为纯净的按键信号。除此之外，由于一次电磁信号的测量中会得到很多按键信息波形，包括按键间隙的无用波形，因此需要设计出算法对一次按键的有效波形（即从按下按键到抬起按键过程产生的电磁信号）。本作品通过分析键盘按键产生电磁信息波形的特点，设计出有效的滤波器以及有效波形的提取算法，为后续的特征分析做好准备。</p>
+<p><strong>第三部分是特征分类识别算法</strong>，这里我们采用三种分类识别算法，针对三种不同的流程，分别是机器学习算法、卷积神经网络（CNN）算法以及孪生神经网络（Siamese）算法，经过设计它们都将很好的适应按键波形特征的分类并较高准确率地完成按键识别。对于机器学习方法，我们通过计算信号的某些统计特征，并利用这些特征进行识别模型的训练与按键的识别。在CNN神经网络中，将按键信号部分截取之后输入神经网络进行学习。在Siamese神经网络中，先对按键信号进行离散小波变换，取三阶近似分量作为特征，之后将按键波形进行两两配对并打上标签之后，放入Siamese神经网络进行学习。</p>
+
+<h3 id="" style="font-size: 25px;">（三）键盘电磁泄漏原理分析</h3>
+
+<!-- <p style="font-size: 22px;"><strong></strong></p> -->
+<p>信号采集是基于对键盘按键按下以及抬起的工作过程中产生电磁泄露的机理分析完成的，下面首先从一般电子设备的电磁泄露情况分析，再从键盘整体结构到电路结构分析其会产生电磁泄漏的可能性，得到电磁泄露的途径过程，进而完成信号采集方案的设计，达到信号采集的目的。</p>
+<p style="font-size: 22px;"><strong>1. 电子设备电磁泄漏</strong></p>
+
+<p>根据麦克斯韦的电磁场理论，变化的电场会激发产生变化的磁场，变化的磁场又会激发产生变化的电场，二者相互激发，产生可以传播的电磁波。因此在电子信息设备中，只要存在时变电流，就会产生电磁波，并且辐射强度与电流强度以及电流变化率正相关。在电流变化波形中，越陡峭的上升沿就会辐射出越强的电磁波。</p>
+
+<p>在电磁泄露的研究中，携带敏感明文信息的电信号称为“红信号”；反之，不携带有价值信息或是携带加密信息的称为“黑信号”。因此，红信号电磁辐射的泄露成为研究的重点，其中红信号的类型主要包括基带信号、调制信号和脉冲信号。</p>
+
+<p>如今大多数电子信息设备使用的都是数字信号，使用二进制表示电路的通断两种状态，因此会经常有上升沿或下降沿的出现，这就伴随着电磁波的产生，发生电磁泄漏现象。</p>
+
+<!-- <p style="font-size: 22px;"><strong></strong></p>
+<p><strong></strong></p> -->
+
+<p>键盘作为常用的电子信息设备，数字信号是其主要信息交互方式，那么经常出现的上升沿和下降沿就必然导致电磁信号泄露现象的出现。</p>
+
+<p style="font-size: 22px;"><strong>2. 键盘结构分析</strong></p>
+
+<p>当今键盘主要分为薄膜键盘、机械键盘和静电容键盘，其中薄膜键盘由于其价格便宜、性能较好的优点，生活中所使用的大部分都是这类键盘。它的结构分为键盘外壳、导电薄膜以及控制电路部分。虽然不同类型键盘的结构和触发原理可能有所不同，例如薄膜键盘的触发方式是通过导电薄膜的导电触点压在电路板上导通电路，而电容式键盘是当导电介质之间的电容达到一定程度就导通电路，但键盘最为核心的部分——即控制电路部分的工作原理基本是一致的，分析控制电路数字信息的产生是弄清电磁信号特征性的关键。</p>
+
+<p style="text-align:center"><img src="/images/jiegou1.png"  style="width: 500px;" /></p>
+<p style="text-align:center">图 3 键盘结构</p>
+
+<p style="font-size: 22px;"><strong>3. 键盘控制电路</strong></p>
+
+<p>键盘控制电路是整个键盘最为核心的部分，主要担任按键扫描识别、编码和传输接口工作；它之所以能将各个按键所表示的数字或字母转换成计算机可以识别的信号，是因为其内部有一组排列成矩阵方式的按键开关，每当有按键被按下，对应的矩阵电路就被接通，进而可以确定按键的位置。为了查询是否有按键被按动，需要运用硬件或软件的方法对矩阵的行列轮转地进行扫描，也称之为行列扫描法。具体的原理是，当没有按键按下时，矩阵的每一行和每一列都被置成高电平，若有按键被按下，则其所在的行列会变成低电平，微处理器会对行列电平进行循环扫描，进而可以确定按下的按键所在位置。当微处理器检测到按键被按动时，会对行列矩阵中其所在的位置进行编码，称之为扫描码；其中按下过程产生的称为接通扫描码（mark），松开按键过程产生的叫做断开扫描码（break）。除了矩阵开关和微处理器，电路中还有晶振以及译码器。其中晶振为键盘中的时钟提供频率基准，译码器将按键的编码信息编译成对应的编码，产生接通扫描码和断开扫描码。</p>
+
+<!-- <p style="text-align:center"><img src="/images/pic1_2.png" style="width: 600px;" /></p> -->
+<p style="text-align:center"><img src="/images/jiegou2.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 4 左：键盘电路结构  右：键盘扫描阵列</p>
+
+<p style="font-size: 22px;"><strong>4. 键盘信息传输过程的电磁泄露</strong></p>
+
+<p>通过上述的键盘工作原理，我们可以分析出完整的键盘信息生成并传输的流程，并判断那些过程会产生红信号泄露。</p>
+
+<p>（1） 键盘的微处理器会对电路行列矩阵进行轮询扫描，检测到低电平时，即可确定有按键被按下，并得到其位置；</p>
+
+<p>（2） 按键被按下和被松开时，还会进行消抖处理，译码器将准确的按键信息编译得到接通扫描码和断开扫描码；</p>
+
+<p>（3） 生成的扫描码将被封装处理，并通过接口电路进行传输。</p>
+
+<p>在这个过程中，接通扫描码和断开扫描码的传输会伴随着数字信号电平的快速变化，因此必然会存在电磁泄漏现象。由于人体可作为导体，那么在人体用手指敲击键盘时，泄露的电磁信号可通过将人体视作一个巨大的天线来进行耦合传播到外部空间。除此之外，电磁信号还会通过传导的方式进行传播，因为键盘可能与距离较近的可传导设备形成电路连接，电磁信号就会通过这样的连接电路进行传导，例如键盘可以通过连接线和主机相连，那么按键产生的电磁信号就可以从连接线中进行传导。按键扫描码的唯一性和对应性，如果能够截获并分析扫描码生成的电磁红信号，那么便有可能反向推导出按键信息。</p>
+
+<p style="font-size: 22px;"><strong>5. 信号采集结果</strong></p>
+<p>使用上述设备进行信号采集之后，得到的原始信号如图5左所示。在原始信号中，可以看到其中参杂了大量毛刺，是设备接收到的环境电磁噪声，会降低按键识别的准确率，需要使用滤波器滤除。实验中采集的到环境电磁噪声信号大多为较高频的信号，而按键信号频率较低，故使用巴特沃斯低通滤波器对信号进行过滤，滤除高频的噪声信号，保留按键信号。</p>
+<p style="text-align:center"><img src="/images/lvbo.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 5 左：采集到的原始信号  右：滤波后的信号</p>
+
+<p>实验中还可以发现，按下不同的按键时，ADC读数的变化趋势并不相同。图6中为按键A与H短按与长按时采集到的信号。可以看出按键A在长按与短按时下降的幅度都大于按键H，从长按信号中可以看到，按键A按下后其信号的抖动幅度大于按键H，除这两个特征外，两个按键的信号还有许多不同的特征。</p>
+<p style="text-align:center"><img src="/images/A_H.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 6 左：按键'A' 'H'短按对比  右：按键'A' 'H'长按对比</p>
+
+<p>为进一步验证不同按键之间的信号差别，我们采集了'A','S','D','O','P','H'以及空格这七个按键多次按下时的adc值变化，并将其绘制为图7，在实验结果中可以看到不同的按键在读数变化幅度、趋势、读数稳定时的波动幅度上都有一些差别，例如A按键按下时其下降幅度普遍大于其它按键，H按键按下时呈现先上升后下降的趋势，O按键按下后的读数波动幅度小于其它按键。这说明我们可以根据收集到的泄露信号的某些统计特征区分不同的按键。</p>
+<p style="text-align:center"><img src="/images/all.png"  style="width: 700px;" /></p>
+<p style="text-align:center">图 7 七按键信号对比</p>
+
+<!-- <p style="font-size: 22px;"><strong>2. 信号处理</strong></p>
+<p>使用上述设备进行信号采集之后，得到的原始信号如图 6左所示。在原始信号中，可以看到信号中参杂了大量毛刺，这些信号并不伴随按键信号的出现而出现，是设备接收到的环境电磁噪声，可能由其它电子设备或电脑中的其它部件产生。这些噪声信号随环境变化而变化，使得按键信号在不同环境条件下出现改变，降低按键识别的准确率，故需要使用滤波器滤除。实验中采集的到环境电磁噪声信号大多为较高频的信号，而按键信号频率较低，故使用巴特沃斯低通滤波器对信号进行过滤，滤除高频的噪声信号，保留按键信号。</p>
+<p style="text-align:center"><img src="/images/tu6.png" style="width: 700px;" /></p>
+<p style="text-align:center">图 6 左：采集到的原始信号  右：滤波后的信号</p>
+<p>从采集到的信号中可以看到当手指接触接盘并按下按键时，设备上的adc读数有明显的快速下降过程，当读数下降到一定值时，会在一定范围内波动，并缓慢上升，且其值小于初始值，而当手指离开键盘时，读数又会先快速上升再缓慢下降。根据这一变化，我们可以较为精确地判断出手指按下按键与离开按键的时间。实验中还可以发现，按下不同的按键时，ADC读数的变化趋势并不相同。图 7中为按键A与H短按与长按时采集到的信号。可以看出按键A在长按与短按时下降的幅度都大于按键H，从长按信号中可以看到，按键A按下后其信号的抖动幅度大于按键H，除这两个特征外，两个按键的信号还有许多不同的特征。</p>
+<p style="text-align:center"><img src="/images/tu7.png" style="width: 700px;" /></p>
+<p style="text-align:center">图 7 左：按键'A' 'H'短按对比  右：按键'A' 'H'长按对比</p>
+<p>为进一步验证不同按键之间的信号差别，我们采集了'A','S','D','O','P','H'以及空格这七个按键多次按下时的adc值变化，并将其绘制为图 8，在实验结果中可以看到不同的按键在读数变化幅度、趋势、读数稳定时的波动幅度上都有一些差别，例如A按键按下时其下降幅度普遍大于其它按键，H按键按下时呈现先上升后下降的趋势，O按键按下后的读数波动幅度小于其它按键。这说明我们可以根据收集到的泄露信号的某些统计特征区分不同的按键。</p>
+<p style="text-align:center"><img src="/images/tu8.png" alt="all" style="width: 700px;" /></p>
+<p style="text-align:center">图 8 七按键信号对比</p>
+<p>在实际识别的过程中，如果对整段信号直接进行识别开销较大，我们可以先将按键信号分离出来，再对提取出的按键信号进行识别。提取按键信号可通过一段信号的变化剧烈程度与该段信号的极差来对按键信号进行识别。首先设定一个差分阈值Diff_min与一个极差阈值Range_min，计算整段信号的差分，寻找到差分大于阈值Diff_min的位置，左右各取长度L_length与R_length长度的信号并计算该段信号的极差Range，判断其是否大于极差阈值Range_min，这样即可完成一个按键信号的简单判定且需要的开销较小。在复杂电磁环境中，还可通过将极差阈值设定为一个范围等方法提高准确率，但通过这两个阈值已能够应对大多数环境下的按键提取。</p>
+<p style="text-align:center"><img src="/images/tu9.png" alt="all" style="width: 700px;" /></p>
+<p style="text-align:center">图 9 按键提取原理与过程</p>
+
+<p style="font-size: 22px;"><strong>3. 特征分类</strong></p>
+<p>在完成信号处理得到有效波形之后，就需要对其波形特征进行提取分类，建立特征与按键信息的映射关系。为了比较不同的特征分类方法对攻击测试准确性的影响，我们一共采取三种方案进行测试，分别是：机器学习、CNN卷积神经网络以及Siamese孪生神经网络。</p>
+<p><strong>3.1 机器学习</strong></p>
+<p>为识别不同的按键，我们计算采集到的按键信号的统计特征，再使用不同的机器学习算法利用这些特征对按键的信号做分类。在实验中，我们使用到的特征有均值、标准差、极差、峰度、偏度和最大斜率等，采用的机器学习算法有SVM、KNN、Decision Tree、Linear Discriminant。</p>
+<p><strong>3.2 卷积神经网络CNN</strong></p>
+<p>卷积神经网络CNN可以使用卷积操作来实现特征提取，再辅以池化等操作，多次迭代之后就会将低维的特征逐渐构建出高维的特征，最后使用神经网络抽象出来的高维特征进行更准确的分类。</p>
+<p>我们使用tf.keras高级接口，多次使用卷积计算池化操作等等，将特征从波形中提取并集中起来，最后通过全连接层进行按键波形还原。深度学习网络模型的构建如下图所示：</p>
+<p style="text-align:center"><img src="/images/tu10.png" alt="all" style="width: 700px;" /></p>
+<p style="text-align:center">图 10 CNN网络结构</p>
+<p><strong>3.3 孪生神经网络</strong></p>
+<p>孪生神经网络(Siamese neural network)，是一种特殊类型的神经网络架构，与一个对输入进行分类的模型不同，该神经网络适合学习两个不同类型输入的区别，同时也擅长学习同一类型输入的相同之处。由于我们实验数据具有一定的环境噪声干扰，所以我们可以利用该神经网络架构的特长，使用该神经网络对在不同环境下的按键数据进行学习，孪生神经网络可以一定程度上消除环境噪音的干扰，充分学习一个按键的本质波形，不同按键之间的区别。</p>
+<p><strong>（1）Siamese的组成</strong></p>
+<p>孪生神经网络是一类包含两个或者更多的相同自网络的神经网络架构，这些自网络一般具有相同的构成以及权重，两个相同的子网络同时进行参数更新。孪生神经网络一般用于比较两个事物的相似性，该两个事物被输入到上文提到的两个相同子网络中取得特征，用另外一个模型比较特征距离，最后得到两个事物是否相同的结果。</p>
+<p style="text-align:center"><img src="/images/tu11.png" alt="all" style="width: 700px;" /></p>
+<p style="text-align:center">图 11 Siamese网络训练和预测流程图</p>
+<p>上图中实线代表预测流程，虚线代表训练流程。W代表共享的权重，Gw()为特征提取函数，Gw（X1）代表输入X1的特征，distance代表距离计算函数，Ew代表最终结果。</p>
+<p><strong>（2）特征分类</strong></p>
+<p>将键盘信号输入孪生神经网络之前，对信号进行离散小波变换来达到特征提取目的。我们发现，采取的键盘电磁信号中存在着大量的高频信号噪声，使用多级离散小波变换获取到的较低频的信号采样可以得到较好的训练效果。</p>
+<p>实现离散小波变换，首先将原始信号分别通过低通滤波器和高通滤波器，然后分别进行降采样就可得到cA与cD。这里的“通过低通滤波器和高通滤波器”可以理解为信号与小波基的两个分解量（Lo_D和Hi_D）进行卷积。离散小波变换每层分解如图所示：</p>
+<p style="text-align:center"><img src="/images/tu12.png" alt="all" style="width: 500px;" /></p>
+<p style="text-align:center">图 12 离散小波变换示意图</p>
+<p>在实践中，我们使用三层离散小波变换，Daubechies2小波作为小波基，采用最终获得的三层近似分量进行训练。</p>
+<p style="text-align:center"><img src="/images/tu13.png" alt="all" style="width: 500px;" /></p>
+<p style="text-align:center">图 13 取三阶近似分量变换</p> -->
+
+
+
+
+<h3 id="三-展示" style="font-size: 25px;">(三) 攻击结果展示</h3>
+<p style="font-size: 22px;"><strong>1. 机器学习</strong></p>
+<p>为识别不同的按键，我们计算采集到的按键信号的统计特征，再使用不同的机器学习算法利用这些特征对按键的信号做分类。在实验中，我们使用的特征有均值、
+  标准差、极差、峰度、偏度和最大斜率，采用的机器学习算法有SVM、KNN、Decision Tree、Linear Discriminant等，使用的数据集为四个按键'A','S','D','E'
+  按下时产生的信号。下表为其中四种机器学习算法在四按键数据集下的准确率，可以看出通过这些特征，算法可以较为准确地区分不同的按键按下时产生的信号。</p>
+
+  <!-- <p style="text-align:center"><img src=".\images\select.png" alt="select" style="width: 400px;" /></p> -->
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: center">算法</th>
+        <th style="text-align: center">准确率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center">SVM</td>
+        <td style="text-align: center">70.1%</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">KNN</td>
+        <td style="text-align: center">66.2%</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Decision Tree</td>
+        <td style="text-align: center">65.9%</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Linear Discriminant</td>
+        <td style="text-align: center">61.9%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="text-align:center">表 1 四按键情况下不同机器学习算法下的分类准确率</p>
+
+<p>根据以上结果，我们采用SVM算法进行识别模型的训练，再使用该模型对一段实际的按键信号进行识别。该段信号中包含按键“A”,“S”,“D”,“E”各按下25~26次的信号，表2为识别结果，可以看到不同按键的识别准确率不同。其中按键A的识别准确率最高，25次按下正确识别24次，按键E准确率最低，26次按下正确识别12次。按键S与D的识别结果中存在大量相互识别错误的情况，即将S识别为D，D识别为S，说明按键S与D的准确率偏低是由于两者的特征值较为接近导致。而按键E的准确率下降经分析为测试时出现较强干扰信号导致按键E信号特征偏向按键A，进而导致识别错误。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">按键</th>
+      <th style="text-align: center">识别正确次数/总次数</th>
+      <th style="text-align: center">识别准确率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">A</td>
+      <td style="text-align: center">24/25</td>
+      <td style="text-align: center">96%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">S</td>
+      <td style="text-align: center">19/25</td>
+      <td style="text-align: center">76%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">D/td>
+      <td style="text-align: center">13/25</td>
+      <td style="text-align: center">52%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">E</td>
+      <td style="text-align: center">12/25</td>
+      <td style="text-align: center">46%</td>
+    </tr>
+  </tbody>
+</table>
+<p style="text-align:center">表 2 不同按键的识别准确率</p>
+
+<p>我们也测试了在不同按键个数条件下的不同算法的准确率，其结果如图8所示。可以看到随按键数量的增加，相似按键不断增多，算法的准确率也在不断下降，在只有两个按键时SVM可达到接近100%的准确率，而在有9个按键时，SVM的分类准确率下降到50%左右。</p>
+<p style="text-align:center"><img src="/images/tu5.png"  style="width: 500px;" /></p>
+<p style="text-align:center">图 8 不同按键数量下四种算法的分类准确率</p>
+
+<p style="font-size: 22px;"><strong>2. 卷积神经网络</strong></p>
+<p>下面使用卷积神经网络对采集的信号数据集进行特征分类。</p>
+<p>数据采集同样使用上述设备和流程，对按键“A”,“B”,“C”,“D”进行多次按键测试，每个按键采集825组数据，共采集3300条数据。经过降噪和有效波形的截取后，部份按键波形绘制如下：</p>
+<p style="text-align:center"><img src="/images/tu14.png" alt="all" style="width: 800px;" /></p>
+<p style="text-align:center">图 9 CNN训练数据</p>
+<p>优化器选择"Adam"，损失函数"sparse_categorical_crossentropy"，训练集与验证集比例为9:1，训练批大小为64，训练30轮。训练集的识别准确率随着训练次数的增加不断增高，最终能达到90%的准确率，损失函数随着训练次数的增加不断减小，即预测错误程度不断降低，最终能降低到0.2左右。</p>
+
+
+<p style="font-size: 22px;"><strong>3. 孪生神经网络</strong></p>
+<p>第三种特征分类方法是使用孪生神经网络来进行。首先输入到该网络的数据信号需要经过离散小波变换获取到的较低频的信号采样，来达到更好的特征提取的目的。孪生神经网络输入有三个，其中两个待区分波形信号组成一组实验数据，另外有一个标签标识该组信号是否来自同一个按键。数据集的生成是从之前测得的实验数据中每个按键抽取100个波形信号，经过排列组合之后可以得到16万组配对数据，按照3:7的比例划分训练集与测试集，放到孪生神经网络中训练，训练8轮。
+</p>
+
+<!-- <h4 id="3-攻击结果">3. 攻击结果</h4> -->
+<p style="font-size: 22px;"><strong>4. 识别效果对比</strong></p>
+<p>为比较机器学习与神经网络两种方法识别按键的准确率，我们采集了四个按键的信号，并分别通过CNN，SVM，孪生神经网络处理数据得到三个用于识别按键的模型，最后使用这三个模型进行攻击测试，即分割并识别一段数据中的所有按键信号。表3为实验结果，其中CNN在实际识别中可以达到95.00%的准确率，而SVM识别准确率为67.5%，Siamese识别准确率与分类准确率相差最小，准确率为94%。</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">识别方法</th>
+      <th style="text-align: center">分类准确率</th>
+      <th style="text-align: center">识别准确率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">SVM</td>
+      <td style="text-align: center">70.1%</td>
+      <td style="text-align: center">67.5%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">CNN</td>
+      <td style="text-align: center">91.4%</td>
+      <td style="text-align: center">95.00%</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Siamese</td>
+      <td style="text-align: center">94.6%</td>
+      <td style="text-align: center">94.0%</td>
+    </tr>
+  </tbody>
+</table>
+<p style="text-align:center">表 3 不同识别方法准确率比较</p>
+
+
+
+
+<!-- <h4 id="4代码展示">4.代码展示</h4> -->
+<!-- <p><strong>4. </strong> <strong>代码展示</strong></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">%查找并预测，攻击用</span>
+<span class="nb">clc</span><span class="p">;</span>
+<span class="n">adc</span> <span class="o">=</span> <span class="nb">csvread</span><span class="p">(</span><span class="s1">'1.csv'</span><span class="p">);</span>
+<span class="n">Fill</span><span class="o">=</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3000</span><span class="p">)</span><span class="o">*</span><span class="n">adc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">%填充</span>
+<span class="n">adc</span><span class="o">=</span><span class="p">[</span><span class="n">Fill</span><span class="p">,</span><span class="n">adc</span><span class="p">];</span>               <span class="c1">%合并</span>
+<span class="n">Hd</span> <span class="o">=</span> <span class="n">lowpass_filter</span><span class="p">;</span>
+<span class="n">adc</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">Hd</span><span class="p">,</span> <span class="n">adc</span><span class="p">);</span>        <span class="c1">%调用滤波器</span>
+<span class="n">adc</span><span class="o">=</span><span class="n">adc</span><span class="p">(</span><span class="mi">4000</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">adc</span><span class="p">));</span>
+
+<span class="n">fs</span><span class="o">=</span><span class="mi">2302</span><span class="p">;</span><span class="n">N</span><span class="o">=</span><span class="nb">length</span><span class="p">(</span><span class="n">adc</span><span class="p">);</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">t</span><span class="o">=</span><span class="n">n</span><span class="p">/</span><span class="n">fs</span><span class="p">;</span>
+<span class="n">f</span><span class="o">=</span><span class="n">n</span><span class="o">*</span><span class="n">fs</span><span class="p">/</span><span class="n">N</span><span class="p">;</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">adc</span><span class="p">);</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">wLength</span> <span class="o">=</span> <span class="mi">550</span><span class="p">;</span>
+<span class="n">colorTable</span><span class="o">=</span><span class="p">[</span><span class="s1">'b'</span><span class="p">,</span><span class="s1">'g'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'c'</span><span class="p">,</span><span class="s1">'m'</span><span class="p">,</span><span class="s1">'y'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">];</span>  <span class="c1">%颜色表</span>
+<span class="n">keyTable</span><span class="o">=</span><span class="p">[</span><span class="s1">'h'</span><span class="p">,</span><span class="s1">'n'</span><span class="p">,</span><span class="s1">'u'</span><span class="p">,</span><span class="s1">'c'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'e'</span><span class="p">];</span>        <span class="c1">%按键表</span>
+<span class="n">indexStart</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>                 <span class="c1">%区间索引</span>
+<span class="n">indexEnd</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+
+<span class="n">adcDiff</span> <span class="o">=</span> <span class="nb">diff</span><span class="p">(</span><span class="n">adc</span><span class="p">);</span>
+<span class="n">adcLength</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">adc</span><span class="p">);</span>
+
+<span class="c1">%根据实际情况调整</span>
+<span class="c1">%------------------------------</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>      <span class="c1">%斜率阈值</span>
+<span class="nb">step</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>     <span class="c1">%不同按键之间的间隔长度</span>
+<span class="n">rangeMin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>   <span class="c1">%变化幅度的最大最小值(开区间)</span>
+<span class="n">rangeMax</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="n">edgeEL</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>    <span class="c1">%左右扩张范围</span>
+<span class="n">edgeER</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="c1">%------------------------------</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">adcLength</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">counter</span><span class="o">&gt;</span><span class="mi">0</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">indexEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">counter</span><span class="p">)</span><span class="o">+</span><span class="nb">step</span>    <span class="c1">%前一个下降沿后一个步长以内不检测</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="k">if</span> <span class="n">adcDiff</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="n">slope</span>  <span class="c1">%提取下降沿</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">while</span> <span class="n">j</span><span class="o">&gt;</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">adcDiff</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">&lt;-</span><span class="mf">0.01</span>
+            <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">end</span>
+        <span class="n">startP</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">while</span> <span class="n">adcDiff</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">&lt;</span><span class="nb">length</span><span class="p">(</span><span class="n">adcDiff</span><span class="p">)</span>
+            <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">end</span>
+        <span class="n">endP</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="n">rangeD</span> <span class="o">=</span> <span class="n">adc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">startP</span><span class="p">)</span> <span class="o">-</span> <span class="n">adc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">endP</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rangeD</span> <span class="o">&gt;</span> <span class="n">rangeMin</span> <span class="o">&amp;&amp;</span> <span class="n">rangeD</span><span class="o">&lt;</span><span class="n">rangeMax</span><span class="p">)</span>   <span class="c1">%判断极差是否在范围内</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">startP</span><span class="o">-</span><span class="n">edgeEL</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">endP</span><span class="o">+</span><span class="n">edgeER</span><span class="o">&lt;</span><span class="n">adcLength</span><span class="p">)</span>  <span class="c1">%判断是否在边缘    </span>
+                    <span class="n">startP</span> <span class="o">=</span> <span class="n">startP</span> <span class="o">-</span> <span class="n">edgeEL</span><span class="p">;</span><span class="c1">%左右扩张</span>
+                    <span class="n">endP</span> <span class="o">=</span> <span class="n">endP</span> <span class="o">+</span> <span class="n">edgeER</span><span class="p">;</span>
+                    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="n">indexStart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">counter</span><span class="p">)</span> <span class="o">=</span> <span class="n">startP</span><span class="p">;</span>
+                    <span class="n">indexEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">counter</span><span class="p">)</span><span class="o">=</span> <span class="n">endP</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">fprintf</span><span class="p">(</span><span class="s2">"%d个结果\n"</span><span class="p">,</span><span class="n">counter</span><span class="p">);</span>
+<span class="n">Md1</span> <span class="o">=</span> <span class="n">loadCompactModel</span><span class="p">(</span><span class="s1">'Model1.mat'</span><span class="p">);</span>   <span class="c1">%加载模型</span>
+<span class="n">ProbsAll</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">keyTable</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">counter</span>
+    <span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">indexStart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">):</span><span class="n">indexEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)),</span><span class="n">adc</span><span class="p">(</span><span class="n">indexStart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">):</span><span class="n">indexEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)),</span><span class="n">colorTable</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">getFeature</span><span class="p">(</span><span class="n">adc</span><span class="p">(</span><span class="n">indexStart</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">):</span><span class="n">indexEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)));</span>   <span class="c1">%计算特征</span>
+    <span class="p">[</span><span class="n">key_label</span><span class="p">,</span><span class="n">Probs</span><span class="p">]</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">Md1</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">ProbsAll</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">keyTable</span><span class="p">))</span> <span class="o">=</span> <span class="n">Probs</span><span class="p">;</span>
+    <span class="nb">fprintf</span><span class="p">(</span><span class="s1">'%c'</span><span class="p">,</span><span class="n">keyTable</span><span class="p">(</span><span class="n">key_label</span><span class="p">));</span>  <span class="c1">%预测结果</span>
+<span class="k">end</span>
+</code></pre></div></div> -->
+
+<h1 id="defense">三. 键盘的电磁泄漏防御</h1>
+<p style="text-align:center">
+  <video src=".\images\output_x264.mp4" width="700px" controls></video>
+  </p>
+<h3 id="一-原理" style="font-size: 25px;">(一) 防御流程设计</h3>
+<p>针对电磁泄漏攻击的实现过程进行分析，面对潜在的信息泄露风险，我们基于键盘信息输入过程中电磁泄露的关键环节，探究避免产生电磁泄漏或防止电磁辐射信息被还原出按键信息的方案，实现键盘的安全性升级，达到防御信息窃取攻击的目的。</p>
+<p>下面将介绍一般针对TEMPEST攻击采取的几种防御措施。</p>
+<p style="text-align:center"><img src="/images/tu15.png" alt="all" style="width: 600px;" /></p>
+<p style="text-align:center">图 10 防御方案</p>
+<p style="font-size: 22px;"><strong>1. 抑源法</strong></p>
+<p>抑源法就是一种从源头阻止电子元件在工作过程产生电磁泄漏的方法，例如对器件的工作电路进行重新设计，或是选择其他电子元件进行电路组成，这样就可以从根源解决电磁泄漏问题。但这样的方法也存在缺陷，一方面是相较于原有的设计，电路结构的改变可能会造成工作效率的下降；另一方面，对于已经成型的产品，需要进行重新设计生产规划，甚至改变流水线结构，可能会造成生产成本的增加。</p>
+<p style="font-size: 22px;"><strong>2. 屏蔽法</strong></p>
+<p>如果不能从根源解决电磁泄漏问题，还可以在电磁泄漏传播途径进行阻断，也同样可以达成防御目，屏蔽法正是采用这样的思路进行设计。TEMPEST防护的典型做法就是用金属铜或其他导电材料进行屏蔽处理，由于电磁屏蔽，电子元件工作过程即使产生电磁泄漏，电磁信号也不会传播出去。美国政府规定，凡属高度机密部门使用的计算机等信息处理设备，其电磁泄漏发射必须达到TEMPEST标准规定的要求，在TEMPEST标准中，屏蔽法就是防止计算机产生电磁泄漏十分关键的措施步骤。</p>
+<p style="font-size: 22px;"><strong>3. 滤波法</strong></p>
+<p>滤波法类似于屏蔽法，同样也是在电磁泄露途径上进行防御操作。滤波法就是通过加装滤波器，将通过线缆和电路传播的电磁信号进行过滤。由于敏感信息的电磁信号频率处在一定的范围内，利用滤波器进行高通、低通或是带通滤波处理，就可以将敏感信息过滤去除，达到防御TEMPEST攻击的目的。然而这种防御措施一般针对于线缆TEMPEST攻击的传导耦合情况，对于辐射耦合，即电磁信号并不是通过线缆耦合泄露的情况效果不佳。例如本作品截取键盘电磁泄露的方式，是电磁信号通过人体耦合辐射传播，滤波法可能达不到良好的防御效果。</p>
+<p style="font-size: 22px;"><strong>4. 干扰法</strong></p>
+<p>干扰法就是在TEMPEST攻击目标附近人为产生很强的噪声干扰，将电磁泄漏信息中的红信号完全淹没，使得攻击者在采集的信号中无法分辨出目的信号，完成防御的效果。本作品最终实现的就是通过添加噪声干扰进行防御。</p>
+<p>前述的攻击流程中，攻击者采集信号时滤除了高频的电磁环境噪声，进而得到较纯净的按键信号。因此，我们可以增加一个频率较低且振幅较大的干扰信号完全覆盖按键信号，使得攻击者的滤波器无法从噪声中恢复出按键信号，实现对该攻击方法的防御。</p>
+<p style="text-align:center"><img src="/images/tu16.png" alt="all" style="width: 800px;" /></p>
+<p style="text-align:center">图 11 正常环境下的测量结果与增加干扰时的测量结果</p>
+<p>在实验过程中，我们发现，当在被攻击机上连接另一个单片机并使用该单片机上的某个引脚向外输出一个不断变化的电压（约1~3V），并将该引脚连接人体时，可在攻击设备所测数据上产生一个较大的波动，我们推测这可能是由于人体放大了引脚输出的信号并向外传播，从而使得攻击设备接收到这一噪声信号。这一噪声信号的强度高于使用者按下键盘时产生的信号，因此可以使用这一信号来对攻击设备进行干扰，用噪声信号盖过键盘信号。</p>
+<!-- <h2 id="展示" style="font-size: 30px;">展示</h2> -->
+
+
+<h3 id="一-原理" style="font-size: 25px;">(二) 防御结果展示</h3>
+<p>基于上述结论，我们设计了一个简易的干扰装置。在该装置中，一个单片机以随机频率（100Hz以下）在其一个引脚上输出一个随机大小的电压（1V~3V），该引脚通过一个生活中常见的静电手环连接到使用者手腕上，通过该装置即可向外发送一个干扰信号。这一干扰装置成本极低且具有较好的干扰效果。</p>
+<p style="text-align:center"><img src="/images/tu17.png" alt="all" style="width: 500px;" /></p>
+<p style="text-align:center">图 12 防御设备实景图</p>
+
+<p>为验证装置的干扰效果，我们设计了一组实验。我们首先收集A按键与B按键的信号并训练得到识别模型，再分别在无干扰与有干扰的情况下测得连续按20次A键与20次B键的信号，最后使用训练得到的模型进行识别。图 18左图为无干扰情况下的识别结果，40个按键中正确识别了39个按键。图 18右图为在有干扰条件下的识别结果，可以看到在有干扰的条件下的识别结果，可以看到在有干扰的条件下完全无法分离出按键信号。</p>
+<p style="text-align:center"><img src="/images/tu18.png" alt="all" style="width: 800px;" /></p>
+<p style="text-align:center">图 13 有、无干扰条件下的识别结果对比</p>
+
+
+
+<h1 id="defense">四. 总结和展望</h1>
+<p style="font-size: 22px;"><strong>1. 总结</strong></p>
+<p>如今键盘作为人们使用电子信息设备中不可缺少的关键设备，承担了人机交互以及信息输入的重要作用，其安全保障显得尤为重要。本作品通过设计攻击流程和防御方案，一方面证实了键盘面对TEMPEST电磁泄漏攻击存在的安全隐患，另一方面提出有效的防御措施，实现了键盘的安全性升级。</p>
+<p>方案的攻击流程包括信号采集、信号处理、特征提取三部分，我们在信号采集以及特征提取部分进行了创新，通过人体可以作为导体的特性，将其视作电磁辐射耦合传播的天线，进而可以采用简单设备进行信号采集，即使存在少量干扰会对电磁信号造成影响，我们使用的滤波器和有效波形提取算法也能高效地处理电磁信号的特征部分；另外在特征分类部分，我们使用机器学习和深度学习算法对数据集进行训练，建立按键和电磁信号特征的映射关系，可以实现更高准确率的按键还原。</p>
+<p>针对攻击流程的关键环节，我们分析设计了多种典型的TEMPESRT防御措施，包括抑源法、屏蔽法、滤波法和干扰法，最后实现了最具可行性且防御效果显著的方案，即对键盘电磁泄露传播过程中添加噪声干扰，通过实验验证，经过改进的键盘具有很好的防御效果，实现了安全性升级，具有良好的市场。</p>
+
+<p style="font-size: 22px;"><strong>2. 展望</strong></p>
+<p>随着电子化设备的不断普及，键盘使用的程度会越来越广泛。本作品旨在发掘出键盘在电磁安全方面存在的漏洞，引起人们对于键盘输入内容安全保障方面的重视，并针对目前尚不完备的针对键盘的TEMPEST防御机制进行创新和改善，对键盘的工业制造起到一定的指导作用。</p>
+<p>另外，本作品仍有不完善的地方，例如，由于键盘电磁信号的采集是通过人体耦合辐射完成的，因此人体状态也会对信号有一定程度的影响，后续工作会尝试消除这种不确定影响，增强信号采集的鲁棒性。</p>
+
+</section>
+    </div>
+  </body>
+</html>
